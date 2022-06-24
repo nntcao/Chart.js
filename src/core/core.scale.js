@@ -1575,13 +1575,13 @@ export default class Scale extends Element {
 	 * @protected
 	 */
   drawTitle() {
-    const {ctx, options: {position, title, reverse}} = this;
+    const {chart, ctx, options: {position, title, reverse}} = this;
 
     if (!title.display) {
       return;
     }
 
-    const font = toFont(title.font);
+    const font = toFont(title.font, chart.options.font);
     const padding = toPadding(title.padding);
     const align = title.align;
     let offset = font.lineHeight / 2;
@@ -1685,7 +1685,8 @@ export default class Scale extends Element {
  	 */
   _resolveTickFontOptions(index) {
     const opts = this.options.ticks.setContext(this.getContext(index));
-    return toFont(opts.font);
+    const fallback = this.chart.options.font
+    return toFont(opts.font, fallback);
   }
 
   /**
