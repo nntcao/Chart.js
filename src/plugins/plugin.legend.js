@@ -113,7 +113,7 @@ export class Legend extends Element {
   }
 
   fit() {
-    const {options, ctx} = this;
+    const {chart, options, ctx} = this;
 
     // The legend may not be displayed for a variety of reasons including
     // the fact that the defaults got set to `false`.
@@ -125,7 +125,7 @@ export class Legend extends Element {
     }
 
     const labelOpts = options.labels;
-    const labelFont = toFont(labelOpts.font);
+    const labelFont = toFont(labelOpts.font, chart.options.font);
     const fontSize = labelFont.size;
     const titleHeight = this._computeTitleHeight();
     const {boxWidth, itemHeight} = getBoxSize(labelOpts, fontSize);
@@ -273,11 +273,11 @@ export class Legend extends Element {
 	 * @private
 	 */
   _draw() {
-    const {options: opts, columnSizes, lineWidths, ctx} = this;
+    const {chart, options: opts, columnSizes, lineWidths, ctx} = this;
     const {align, labels: labelOpts} = opts;
     const defaultColor = defaults.color;
     const rtlHelper = getRtlAdapter(opts.rtl, this.left, this.width);
-    const labelFont = toFont(labelOpts.font);
+    const labelFont = toFont(labelOpts.font, chart.options.font);
     const {color: fontColor, padding} = labelOpts;
     const fontSize = labelFont.size;
     const halfFontSize = fontSize / 2;
@@ -431,9 +431,10 @@ export class Legend extends Element {
 	 * @protected
 	 */
   drawTitle() {
+    const chart = this.chart;
     const opts = this.options;
     const titleOpts = opts.title;
-    const titleFont = toFont(titleOpts.font);
+    const titleFont = toFont(titleOpts.font, chart.options.font);
     const titlePadding = toPadding(titleOpts.padding);
 
     if (!titleOpts.display) {
@@ -482,7 +483,7 @@ export class Legend extends Element {
 	 */
   _computeTitleHeight() {
     const titleOpts = this.options.title;
-    const titleFont = toFont(titleOpts.font);
+    const titleFont = toFont(titleOpts.font, this.chart.options.font);
     const titlePadding = toPadding(titleOpts.padding);
     return titleOpts.display ? titleFont.lineHeight + titlePadding.height : 0;
   }
