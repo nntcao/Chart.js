@@ -42,7 +42,7 @@ export class Title extends Element {
 
     const lineCount = isArray(opts.text) ? opts.text.length : 1;
     this._padding = toPadding(opts.padding);
-    const textSize = lineCount * toFont(opts.font).lineHeight + this._padding.height;
+    const textSize = lineCount * toFont(opts.font, this.chart.options.font).lineHeight + this._padding.height;
 
     if (this.isHorizontal()) {
       this.height = textSize;
@@ -89,7 +89,7 @@ export class Title extends Element {
       return;
     }
 
-    const fontOpts = toFont(opts.font);
+    const fontOpts = toFont(opts.font, this.chart.options.font);
     const lineHeight = fontOpts.lineHeight;
     const offset = lineHeight / 2 + this._padding.top;
     const {titleX, titleY, maxWidth, rotation} = this._drawArgs(offset);
